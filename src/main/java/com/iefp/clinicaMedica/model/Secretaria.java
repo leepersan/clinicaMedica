@@ -1,5 +1,6 @@
 package com.iefp.clinicaMedica.model;
 
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Paciente {
+public class Secretaria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,5 +23,4 @@ public class Paciente {
     @OneToOne
     @JoinColumn(name = "utilizador_id")
     private Utilizador utilizador;
-
 }

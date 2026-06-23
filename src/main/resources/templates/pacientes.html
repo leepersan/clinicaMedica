@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Pacientes da Clínica</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
+<h2> Lista de Pacientes </h2>
 <main>
     <table>
     <tr>
@@ -24,8 +26,13 @@
     <form action="/pacientes" method="post">
         <input type="text" name="nome" placeholder="Nome completo">
         <input type="number" name="idade" placeholder="Idade">
-        <button type="submit">Adicionar</button>
+        <button type="submit" onclick="mostrarMensagem()">Adicionar</button>
     </form>
+    <script>
+        function mostrarMensagem(){
+            alert("Operação realizada com sucesso!")
+        }
+    </script>
 </section>
     </main>
 </body>

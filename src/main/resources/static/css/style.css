@@ -1,0 +1,206 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background: #f5f9fc;
+}
+
+main {
+    width: 90%;
+    margin: 30px auto;
+}
+
+.cabecalho {
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background-color: #eeeeee;
+    border-left: 8px solid #444444;
+}
+
+.cabecalho h1 {
+    margin: 0;
+    color: #444444;
+}
+
+.cabecalho p {
+    margin-bottom: 0;
+}
+
+.menu {
+    margin-bottom: 20px;
+}
+
+.menu a {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #444444;
+    color: white;
+    padding: 9px 14px;
+    border-radius: 5px;
+    margin-right: 6px;
+}
+
+.menu a:hover {
+    opacity: 0.85;
+}
+
+.cartao{
+    background-color: white;
+    paddin: 20px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th {
+    background-color: #eeeeee;
+    color: #444444;
+}
+
+th,
+td {
+    border: 1px solid #999;
+    padding: 10px;
+    text-align: left;
+}
+
+button{
+    padding: 9px 14px;
+    margin-top: 15px;
+    cursor: pointer;
+    background-color: #444444;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+button:hover {
+    opacity: 0.85;
+}
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+}
+
+label{
+    margin-top: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+imput,
+select{
+    padding: 9px;
+    margin-top: 5px;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+}
+
+.destacado{
+    color: red;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+botoes{
+    margin-top: 15px;
+}
+
+campo-especialidade{
+    display: none;
+}
+
+.erro{
+    background-color: #f8d7da;
+    color: #842029;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #f5c2c7;
+}
+
+/* Tema Paciente */
+.tema-paciente .cabecalho {
+    background-color: #d9eaf7;
+    border-left-color: #0b5394;
+}
+
+.tema-paciente .cabecalho h1,
+.tema-paciente th {
+    color: #0b5394;
+}
+
+.tema-paciente th {
+    background-color: #d9eaf7;
+}
+
+.tema-paciente .menu a,
+.tema-paciente button {
+    background-color: #0b5394;
+}
+
+/* Tema Médico */
+.tema-medico .cabecalho {
+    background-color: #d9ead3;
+    border-left-color: #38761d;
+}
+
+.tema-medico .cabecalho h1,
+.tema-medico th {
+    color: #38761d;
+}
+
+.tema-medico th {
+    background-color: #d9ead3;
+}
+
+.tema-medico .menu a,
+.tema-medico button {
+    background-color: #38761d;
+}
+
+/* Tema Secretária */
+.tema-secretaria .cabecalho {
+    background-color: #eadcf8;
+    border-left-color: #674ea7;
+}
+
+.tema-secretaria .cabecalho h1,
+.tema-secretaria th {
+    color: #674ea7;
+}
+
+.tema-secretaria th {
+    background-color: #eadcf8;
+}
+
+.tema-secretaria .menu a,
+.tema-secretaria button {
+    background-color: #674ea7;
+}
+
+/* Tema Utilizador */
+.tema-utilizador .cabecalho {
+    background-color: #eeeeee;
+    border-left-color: #444444;
+}
+
+.tema-utilizador .cabecalho h1,
+.tema-utilizador th {
+    color: #444444;
+}
+
+.tema-utilizador th {
+    background-color: #eeeeee;
+}
+
+.tema-utilizador .menu a,
+.tema-utilizador button {
+    background-color: #444444;
+}

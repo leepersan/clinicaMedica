@@ -10,17 +10,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Paciente {
+public class Medico {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String especialidade;
 
     //Composição
-
     @OneToOne
-    @JoinColumn(name = "utilizador_id")
+    @JoinColumn(name="utilizador_id", unique = true)
     private Utilizador utilizador;
 
 }
