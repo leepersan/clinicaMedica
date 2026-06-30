@@ -1,1 +1,1 @@
-Implementação do padrão MVC (Model–View–Controller) no Spring Boot, em um sistema de Clínica Médica.
+Criado um sistema de clínica médica, utilizando o JAVA e SpringBoot em Desenvolvimento de aplicações web em JAVA.
