@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt"> xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="pt"> xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Listagem</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
+
 </head>
 <body>
 <main>
@@ -19,6 +20,7 @@
         <a href="/medicos">Médicos</a>
         <a href="/secretarias">Secretárias</a>
         <a href="/utilizadores">Utilizadores</a>
+        <a href="disponibilidades">Disponibilidades</a>
 
     </nav>
     <section>
@@ -42,17 +44,17 @@
                 <td th:text="${tipo=='UTILIZADOR'} ? ${item.email}: ${item.utilizador.email}"
                 ></td>
 
-                <td th:if="${tipo=='UTILIZADOR'}
-            th:text=${item.perfil}">
+                <td th:if="${tipo=='UTILIZADOR'}"
+            th:text="${item.perfil}">
                 </td>
 
-                <td th:if="${tipo=='MEDICO'}
-            th:text=${item.especialidade}">
+                <td th:if="${tipo=='MEDICO'}"
+            th:text="${item.especialidade}">
                 </td>
 
                 <td th:text="${tipo=='UTILIZADOR'}
-            ?${#temportals.format(item.dataNascimento, 'dd/MM/yyyy')}
-            :${#temporals.format(item.dataNascimento, 'dd/MM/yyyy')}"
+            ?${#temporals.format(item.dataNascimento, 'dd/MM/yyyy')}
+            :${#temporals.format(item.utilizador.dataNascimento, 'dd/MM/yyyy')}"
                 ></td>
               <td th:text="${tipo=='UTILIZADOR'} ? ${item.idade}: ${item.utilizador.idade}">
               </td>

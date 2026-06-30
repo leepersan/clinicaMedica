@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Registar Utilizador</title>
+  <meta charset="UTF-8">
+  <title>Registar Utilizador</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body>
-<h2> Lista de Pacientes </h2>
+<body tema="tema-utilizador">
 <main>
   <header class="cabecalho">
-    <h1 id="tituloFormulario"> Novo utilizador </h1>
-    <p> Prencha os dados para registar um novo utilizador na clínica médica</p>
+    <h1 id="tituloFormulario">Novo utilizador</h1>
+    <p>Preencha os dados para registar um novo utilizador na clínica médica</p>
   </header>
 
   <nav class="menu">
@@ -18,51 +18,54 @@
     <a href="/medicos">Médicos</a>
     <a href="/secretarias">Secretárias</a>
     <a href="/utilizadores">Utilizadores</a>
+    <a href="disponibilidades">Disponibilidades</a>
+    <a href="consultas">Consultas</a>
 
   </nav>
+
   <section class="cartao">
+
+    <p th:if="${erro}" th:text="${erro}" class="erro"></p>
 
     <form action="/registar" method="post" class="formulario">
 
-      <label> Tipo de utilizador</label>
+      <label for="perfil">Tipo de utilizador</label>
       <select name="perfil" id="perfil" onchange="mudarFormulario()" required>
-        <option>Selecione</option>
-        <option>Paciente</option>
-        <option>Médico</option>
-        <option>Secretária</option>
+        <option value="">Selecione</option>
+        <option value="PACIENTE">Paciente</option>
+        <option value="MEDICO">Médico</option>
+        <option value="SECRETARIA">Secretária</option>
       </select>
 
-      <label for="nome"> Nome Completo</label>
+      <label for="nome">Nome Completo</label>
       <input type="text" id="nome" name="nome" placeholder="Nome completo" required>
 
-      <label for="email"> Email</label>
+      <label for="email">Email</label>
       <input type="email" id="email" name="email" placeholder="Email" required>
 
-      <label for="dataNascimento"> Data de nascimento </label>
+      <label for="senha">Senha</label>
+      <input type="password" id="senha" name="senha" placeholder="Senha" required>
+
+      <label for="dataNascimento">Data de nascimento</label>
       <input type="date" id="dataNascimento" name="dataNascimento" required>
 
-      <label for="telefone"> Telefone</label>
+      <label for="telefone">Telefone</label>
       <input type="text" id="telefone" name="telefone" placeholder="Telefone" required>
 
-      <label for="endereco"> Endereço </label>
-      <input type="text" id="endereco" name="endereco" placeholder="Endereço"required>
+      <label for="endereco">Endereço</label>
+      <input type="text" id="endereco" name="endereco" placeholder="Endereço" required>
 
       <div id="campoEspecialidade" class="campo-especialidade">
-      <label for="especialidade"> Especialidade </label>
-      <input type="text" id="especialidade" name="especialidade" placeholder="Especialidade médica"required>
+        <label for="especialidade">Especialidade</label>
+        <input type="text" id="especialidade" name="especialidade" placeholder="Especialidade médica" required>
       </div>
 
       <button type="submit" onclick="mostrarMensagem()">Adicionar</button>
-
     </form>
 
-    <script>
-      function mostrarMensagem(){
-        alert("Operação realizada com sucesso!")
-      }
-    </script>
   </section>
+
 </main>
+<script src="/js/script.js"></script>
 </body>
 </html>
-

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Disponibilidades</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body tema="tema-medico">
+<main>
+    <header>
+        <h1>Disponibilidadades dos Médicos</h1>
+        <p>Horários de trabalho dividos em vagas de consulta de 1 hora</p>
+    </header>
+    <nav class="menu">
+        <a href="/registar">Novo Utilizador</a>
+        <a href="/pacientes">Pacientes</a>
+        <a href="/medicos">Médicos</a>
+        <a href="/secretarias">Secretárias</a>
+        <a href="/utilizadores">Utilizadores</a>
+        <a href="/disponibilidades">Disponibilidades</a>
+        <a href="/consultas">Consultas</a>
+    </nav>
+
+
+
+    <section class="cartao">
+        <h2>Registar horário de trabalho</h2>
+
+        <p th:if="${erro}" th:text="${erro}" class="erro"></p>
+
+        <form action="/disponibilidades" method="post" class="formulario">
+
+            <label for="medicoId">Médico</label>
+            <select name="medicoId" id="medicoId" required>
+                <option value="">Selecione o médico</option>
+                <option th:each="m : ${medicos}"
+                        th:value="${m.id}"
+                        th:text="${m.utilizador.nome + ' - ' + m.especialidade}"
+                ></option>
+            </select>
+
+            <label for="data">Data de trabalho</label>
+            <input type="date" id="data" name="data" required>
+
+            <label for="horaInicioTrabalho">Hora início trabalho</label>
+            <input type="time" id="horaInicioTrabalho" name="horaInicioTrabalho" required>
+
+            <label for="horaFimTrabalho">Hora fim trabalho</label>
+            <input type="time" id="horaFimTrabalho" name="horaFimTrabalho" required>
+
+            <button type="submit">Gerar disponibilidades</button>
+        </form>
+    </section>
+    <section class="cartao">
+        <h2>Disponibilidades geradas</h2>
+        <table>
+            <tr>
+                <th>Médico</th>
+                <th>Especialidade</th>
+                <th>Data</th>
+                <th>Hora Início</th>
+                <th>Hora Fim</th>
+                <th>Estado</th>
+            </tr>
+            <tr th:each="d : ${disponibilidades}">
+                <td th:text="${d.medico.utilizador.nome}"></td>
+                <td th:text="${d.medico.especialidade}"></td>
+                <td th:text="${#temporals.format(d.data, 'dd/MM/yyyy')}"></td>
+                <td th:text="${d.horaInicio}"></td>
+                <td th:text="${d.horaFim}"></td>
+                <td th:text="${d.ocupada} ? 'Ocupada' : 'Disponível'"></td>
+            </tr>
+
+        </table>
+    </section>
+</main>
+</body>
+</html>

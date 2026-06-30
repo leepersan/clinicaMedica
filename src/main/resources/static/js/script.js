@@ -1,26 +1,26 @@
-function mostrarMensagem() {
+function mostrarMensagem(){
     alert("Operação realizada com sucesso!")
 }
 
-function esconderMostrarTabela() {
+function esconderMostrarTabela(){
     const tabela = document.getElementById("tabelaRegisto");
 
-    if (tabela.style.display === "none") {
-        tabela.style.display = "table";
-    } else {
-        tabela.style.display = "none";
+    if(tabela.style.display==="none"){
+        tabela.style.display="table";
+    }else{
+        tabela.style.display="none";
     }
 }
 
-function destacarNomes() {
-    const nomes = document.querySelectorAll(".nome-registo");
+function destacarNomes(){
+    const nomes= document.querySelectorAll(".nome-registo");
 
-    nomes.forEach(function (nome) {
+    nomes.forEach(function(nome){
         nome.classList.toggle("destacado");
     });
 }
 
-function limparTemas() {
+function limparTemas(){
     document.body.classList.remove(
         "tema-paciente",
         "tema-medico",
@@ -28,42 +28,38 @@ function limparTemas() {
         "tema-utilizador")
 }
 
-function mudarFormulario() {
+function mudarFormulario(){
     const perfil = document.getElementById("perfil");
     const tituloFormulario = document.getElementById("tituloFormulario");
     const campoEspecialidade = document.getElementById("campoEspecialidade");
     const especialidade = document.getElementById("especialidade");
 
-    if (!perfil || !tituloFormulario || !campoEspecialidade || !especialidade) {
+    if(!perfil || !tituloFormulario || !campoEspecialidade || !especialidade){
         return;
     }
 
     limparTemas();
 
-    if (perfil.value === "PACIENTE") {
+    if(perfil.value === "PACIENTE"){
         tituloFormulario.textContent = "Novo Paciente";
-        campoEspecialidade.styleDisplay = "none";
+        campoEspecialidade.style.display = "none";
         especialidade.required = false;
         especialidade.value = "";
         document.body.classList.add("tema-paciente");
-
-
-    } else if (perfil.value === "MEDICO") {
+    }else if(perfil.value === "MEDICO"){
         tituloFormulario.textContent = "Novo Médico";
-        campoEspecialidade.styleDisplay = "block";
+        campoEspecialidade.style.display = "block";
         especialidade.required = true;
         document.body.classList.add("tema-medico");
-
-    } else if (perfil.value === "SECRETARIA") {
+    }else if(perfil.value === "SECRETARIA"){
         tituloFormulario.textContent = "Nova Secretária";
-        campoEspecialidade.styleDisplay = "none";
+        campoEspecialidade.style.display = "none";
         especialidade.required = false;
         especialidade.value = "";
         document.body.classList.add("tema-secretaria");
-
-    } else {
+    }else{
         tituloFormulario.textContent = "Novo Utilizador";
-        campoEspecialidade.styleDisplay = "none";
+        campoEspecialidade.style.display = "none";
         especialidade.required = false;
         especialidade.value = "";
         document.body.classList.add("tema-utilizador");
@@ -71,55 +67,58 @@ function mudarFormulario() {
 
 }
 
-function mudarTituloListagem() {
+function mudarTituloListagem(){
     const tipoPagina = document.getElementById("tipoPagina");
-    const tituloListagem = document.getElementById("tituloListagem");
-    const subTituloListagem = document.getElementById("subTituloListagem");
+    const tituloListagem= document.getElementById("tituloListagem");
+    const subtituloListagem= document.getElementById("subtituloListagem");
 
-    if (tipoPagina || !tituloListagem) {
-        return;
-    }
+    if(!tipoPagina || !tituloListagem){
+        return;}
 
     limparTemas();
 
-    if (tipoPagina.value === "PACIENTE") {
+    if(tipoPagina.value === "PACIENTE"){
         tituloListagem.textContent = "Listar Pacientes";
 
-        if (subTituloListagem) {
-            tituloListagem.textContent = "Pacientes registados na clínica.";
+        if (subtituloListagem) {
+            subtituloListagem.textContent = "Pacientes registados na clínica.";
         }
+
         document.body.classList.add("tema-paciente");
-    }else if(tipoPagina.value === "MEDICO") {
+    } else if (tipoPagina.value === "MEDICO") {
         tituloListagem.textContent = "Listar Médicos";
 
-        if (subTituloListagem) {
-            tituloListagem.textContent = "Médicos registados na clínica.";
+        if (subtituloListagem) {
+            subtituloListagem.textContent = "Médicos registados na clínica.";
         }
-        document.body.classList.add("tema-medico");
 
-    }else if(tipoPagina.value === "SECRETARIA") {
+        document.body.classList.add("tema-medico");
+    } else if (tipoPagina.value === "SECRETARIA") {
         tituloListagem.textContent = "Listar Secretárias";
 
-        if (subTituloListagem) {
-            tituloListagem.textContent = "Secretárias registadas na clínica.";
+        if (subtituloListagem) {
+            subtituloListagem.textContent = "Secretárias registadas na clínica.";
         }
-        document.body.classList.add("tema-secretaria");
 
-    }else if(tipoPagina.value === "UTILIZADOR") {
+        document.body.classList.add("tema-secretaria");
+    } else if (tipoPagina.value === "UTILIZADOR") {
         tituloListagem.textContent = "Listar Utilizadores";
 
-        if (subTituloListagem) {
-            tituloListagem.textContent = "Utilizadores registados na clínica.";
+        if (subtituloListagem) {
+            subtituloListagem.textContent = "Todos os utilizadores registados no sistema.";
         }
-        document.body.classList.add("tema-utilizador");
 
-    }else{
+        document.body.classList.add("tema-utilizador");
+    } else {
         tituloListagem.textContent = "Listar";
         document.body.classList.add("tema-utilizador");
     }
-
-    window.onload = function () {
-        mudarFormulario();
-        mudarTituloListagem();
-    }
 }
+
+window.onload = function() {
+    mudarFormulario();
+    mudarTituloListagem();
+}
+
+
+

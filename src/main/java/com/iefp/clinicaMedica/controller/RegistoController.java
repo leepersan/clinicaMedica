@@ -1,5 +1,6 @@
 package com.iefp.clinicaMedica.controller;
 
+import com.iefp.clinicaMedica.service.ListagemService;
 import com.iefp.clinicaMedica.service.RegistoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,21 +9,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 
 @Controller
 public class RegistoController {
 
     private final RegistoService registoService;
+    private final ListagemService listagemService;
 
-    public RegistoController(RegistoService registoService) {
+    public RegistoController(RegistoService registoService, ListagemService listagemService) {
         this.registoService = registoService;
+        this.listagemService = listagemService;
     }
 
     //Registar utilizador
     @GetMapping("/registar")
-    public String mostrarFormularioRegisto(){
-
+    public String mostrarFormularioRegisto() {
         return "registar-utilizador";
     }
 
@@ -42,7 +45,6 @@ public class RegistoController {
                         nome,
                         email,
                         senha,
-                        perfil,
                         dataNascimento,
                         telefone,
                         endereco
@@ -58,7 +60,6 @@ public class RegistoController {
                         nome,
                         email,
                         senha,
-                        perfil,
                         dataNascimento,
                         telefone,
                         endereco,
@@ -74,7 +75,6 @@ public class RegistoController {
                         nome,
                         email,
                         senha,
-                        perfil,
                         dataNascimento,
                         telefone,
                         endereco
@@ -83,9 +83,116 @@ public class RegistoController {
                 return "redirect:/secretarias";
             }
             return "redirect:/utilizadores";
+
         } catch (RuntimeException erro) {
             model.addAttribute("erro", erro.getMessage());
             return "registar-utilizador";
+        }
+    }
+
+
+    @PostMapping("/disponibilidades")
+    public String criarDisponibilidades(@RequestParam Long medicoId,
+                                        @RequestParam LocalDate data,
+                                        @RequestParam LocalTime horaInicioTrabalho,
+                                        @RequestParam LocalTime horaFimTrabalho,
+                                        Model model) {
+
+        try {
+            registoService.criarDisponibilidade(
+                    medicoId,
+                    data,
+                    horaInicioTrabalho,
+                    horaFimTrabalho
+            );
+
+            return "redirect:/disponibilidades";
+
+        } catch (RuntimeException erro) {
+            model.addAttribute("erro", erro.getMessage());
+            model.addAttribute("disponibilidades", listagemService.listarTodasDisponibilidades());
+            model.addAttribute("medicos", listagemService.listarMedicos());
+            return "disponibilidades";
+
+        }
+    }
+
+    @PostMapping("/consultas")
+    public String marcarConsulta(@RequestParam Long disponibilidadeId
+            ,
+                                 @RequestParam Long pacienteId,
+                                 @RequestParam(required = false) Long secretariaId,
+                                 Model model) {
+        try {
+            registoService.marcarConsulta(
+                    disponibilidadeId
+                    ,
+                    pacienteId,
+                    secretariaId
+            );
+
+            return "redirect:/consultas";
+
+        } catch (RuntimeException erro) {
+            model.addAttribute("erro", erro.getMessage());
+            model.addAttribute("consultas", listagemService.listarTodasConsultas());
+            model.addAttribute("especialidades", listagemService.listarEspecialidades());
+            model.addAttribute("pacientes", listagemService.listarPacientes());
+            model.addAttribute("secretarias", listagemService.listarSecretarias());
+            return "consultas";
+        }
+    }
+
+    @PostMapping("/receitas")
+    public String criarReceita(@RequestParam Long consultaId,
+                               @RequestParam String medicamento,
+                               @RequestParam String dosagem,
+                               @RequestParam String instrucoes,
+                               Model model) {
+
+        try {
+
+            registoService.criarReceita(
+                    consultaId,
+                    medicamento,
+                    dosagem,
+                    instrucoes
+            );
+            return "redirect:/receitas";
+
+        } catch (RuntimeException erro) {
+            model.addAttribute("erro", erro.getMessage());
+            model.addAttribute("receitas", listagemService.listarReceitas());
+            model.addAttribute("consultas", listagemService.listarTodasConsultas());
+
+            return "receitas";
+        }
+
+
+    }
+
+    @PostMapping("/exames")
+    public String criarExame(@RequestParam Long consultaId,
+                             @RequestParam String tipoExame,
+                             @RequestParam String descricao,
+                             @RequestParam(required = false) String resultado,
+                             Model model) {
+
+        try {
+            registoService.criarExame(
+                    consultaId,
+                    tipoExame,
+                    descricao,
+                    resultado
+            );
+            return "redirect:/exames";
+
+        } catch (RuntimeException erro) {
+            model.addAttribute("erro", erro.getMessage());
+            model.addAttribute("exames", listagemService.listarExames());
+            model.addAttribute("consultas", listagemService.listarTodasConsultas());
+
+            return "exames";
         }
     }
 }

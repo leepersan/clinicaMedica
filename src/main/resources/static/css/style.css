@@ -1,10 +1,11 @@
-body {
+body{
     font-family: Arial, sans-serif;
     margin: 20px;
-    background: #f5f9fc;
+    background-color: #f5f9fc;
+    color:#222;
 }
 
-main {
+main{
     width: 90%;
     margin: 30px auto;
 }
@@ -23,7 +24,7 @@ main {
 }
 
 .cabecalho p {
-    margin-bottom: 0;
+    margin-bottom:0;
 }
 
 .menu {
@@ -40,31 +41,31 @@ main {
     margin-right: 6px;
 }
 
-.menu a:hover {
+.menu a:hover{
     opacity: 0.85;
 }
 
 .cartao{
     background-color: white;
-    paddin: 20px;
+    padding: 20px;
     border-radius: 10px;
     border: 1px solid #ddd;
 }
 
-table {
-    width: 100%;
 
+table{
+    width: 100%;
     border-collapse: collapse;
     margin-top: 15px;
 }
 
-th {
+th{
     background-color: #eeeeee;
     color: #444444;
 }
 
 th,
-td {
+td{
     border: 1px solid #999;
     padding: 10px;
     text-align: left;
@@ -79,8 +80,9 @@ button{
     border: none;
     border-radius: 5px;
 }
+
 button:hover {
-    opacity: 0.85;
+    opcaity: 0.85;
 }
 
 .formulario {
@@ -92,11 +94,10 @@ button:hover {
 label{
     margin-top: 10px;
     font-weight: bold;
-    text-transform: uppercase;
 }
 
-imput,
-select{
+input,
+select {
     padding: 9px;
     margin-top: 5px;
     border: 1px solid #aaa;
@@ -109,17 +110,17 @@ select{
     text-transform: uppercase;
 }
 
-botoes{
+.botoes{
     margin-top: 15px;
 }
 
-campo-especialidade{
-    display: none;
+.campo-especialidade{
+    display:none;
 }
 
 .erro{
     background-color: #f8d7da;
-    color: #842029;
+    color:#842029;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #f5c2c7;
