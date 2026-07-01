@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Receitas</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="tema-medico">
+<main>
+    <header class="cabecalho">
+        <h1>Receitas médicas</h1>
+        <p>Registo de receitas associados às consultas marcadas</p>
+    </header>
+    <nav class="menu">
+        <a href="/home">Início</a>
+
+        <a href="/consultas"
+           th:if="${utilizador != null && (utilizador.perfil == 'PACIENTE' || utilizador.perfil == 'SECRETARIA')}">
+            Consultas
+        </a>
+
+        <a href="/disponibilidades"
+           th:if="${utilizador != null && utilizador.perfil == 'MEDICO'}">
+            Disponibilidades
+        </a>
+
+        <a href="/receitas"
+           th:if="${utilizador != null && utilizador.perfil == 'MEDICO'}">
+            Receitas
+        </a>
+
+        <a href="/exames"
+           th:if="${utilizador != null && utilizador.perfil == 'MEDICO'}">
+            Exames
+        </a>
+
+        <a href="/pacientes"
+           th:if="${utilizador != null && utilizador.perfil == 'SECRETARIA'}">
+            Pacientes
+        </a>
+
+        <a href="/medicos"
+           th:if="${utilizador != null && utilizador.perfil == 'SECRETARIA'}">
+            Médicos
+        </a>
+
+        <a href="/secretarias"
+           th:if="${utilizador != null && utilizador.perfil == 'SECRETARIA'}">
+            Secretárias
+        </a>
+
+        <a href="/utilizadores"
+           th:if="${utilizador != null && utilizador.perfil == 'SECRETARIA'}">
+            Utilizadores
+        </a>
+
+        <a href="/logout">Sair</a>
+    </nav>
+    <section class="cartao">
+        <h2>Receitas registadas</h2>
+
+        <table>
+            <tr>
+                <th>Paciente</th>
+                <th>Médico</th>
+                <th>Especialidade</th>
+                <th>Data da consulta</th>
+                <th>Hora</th>
+                <th>Medicamentos</th>
+                <th>Dosagem</th>
+                <th>Instruções</th>
+            </tr>
+            <tr th:each="r : ${receitas}">
+                <td th:text="${r.consulta.paciente.utilizador.nome}"></td>
+                <td th:text="${r.consulta.disponibilidade.medico.utilizador.nome}"></td>
+                <td th:text="${r.consulta.disponibilidade.medico.especialidade}"></td>
+                <td th:text="${#temporals.format(r.consulta.data, 'dd/MM/yyyy')}"></td>
+                <td th:text="${r.consulta.horaInicio + ' às ' + r.consulta.horaFim}"></td>
+                <td th:text="${r.medicamento}"></td>
+                <td th:text="${r.dosagem}"></td>
+                <td th:text="${r.instrucoes}"></td>
+            </tr>
+        </table>
+    </section>
+    <section class="cartao">
+
+        <h2>Nova receita</h2>
+        <p th:if="${erro}" th:text="${erro}" class="erro"></p>
+
+        <form action="/receitas" method="post" class="formulario">
+
+            <label for="consultaId">Consulta</label>
+            <select name="consultaId" id="consultaId" required>
+                <option value="">Selecione a consulta</option>
+                <option th:each="c : ${consultas}"
+                        th:value="${c.id}"
+                        th:text="${c.paciente.utilizador.nome + ' - ' + c.disponibilidade.medico.utilizador.nome +
+                        ' - ' + c.disponibilidade.medico.especialidade + ' - ' + #temporals.format(c.data, 'dd/MM/yyyy') +
+                        ' - ' + c.horaInicio + ' às ' + c.horaFim}"
+                ></option>
+            </select>
+
+            <label for="medicamento">Medicamento</label>
+            <input type="text" id="medicamento" name="medicamento" placeholder="Nome do medicamento">
+
+            <label for="dosagem">Dosagem</label>
+            <input type="text" id="dosagem" name="dosagem" placeholder="Dosagem do medicamento">
+
+            <label for="intrucoes">Instruções</label>
+            <input type="text" id="intrucoes" name="instrucoes" placeholder="Instruções do medicamento">
+            <button type="submit">Guardar receita</button>
+        </form>
+
+    </section>
+
+</main>
+</body>
+</html>

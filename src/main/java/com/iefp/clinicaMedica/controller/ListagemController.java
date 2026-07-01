@@ -1,7 +1,8 @@
 package com.iefp.clinicaMedica.controller;
 
-
+import com.iefp.clinicaMedica.model.Utilizador;
 import com.iefp.clinicaMedica.service.ListagemService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,12 +18,22 @@ public class ListagemController {
 
     @GetMapping("/")
     public String paginaInicial() {
-        return "redirect:/pacientes";
+        return "redirect:/login";
     }
 
     //Listar utilizadores
     @GetMapping("/utilizadores")
-    public String listarUtilizadores(Model model) {
+    public String listarUtilizadores(Model model, HttpSession session) {
+
+        Utilizador utilizadorLogado = (Utilizador) session.getAttribute("utilizadorLogado");
+
+        if (utilizadorLogado == null) {
+            return "redirect:/login";
+        }
+
+        if (!utilizadorLogado.getPerfil().equals("SECRETARIA")) {
+            return "redirect:/home";
+        }
         model.addAttribute("lista", listagemService.listarUtilizadores());
         model.addAttribute("tipo", "UTILIZADOR");
         return "listagem";
@@ -30,7 +41,16 @@ public class ListagemController {
 
     //Listar pacientes
     @GetMapping("/pacientes")
-    public String listarPacientes(Model model) {
+    public String listarPacientes(Model model, HttpSession session) {
+        Utilizador utilizadorLogado = (Utilizador) session.getAttribute("utilizadorLogado");
+
+        if (utilizadorLogado == null) {
+            return "redirect:/login";
+        }
+
+        if (!utilizadorLogado.getPerfil().equals("SECRETARIA")) {
+            return "redirect:/home";
+        }
         model.addAttribute("lista", listagemService.listarPacientes());
         model.addAttribute("tipo", "PACIENTE");
         return "listagem";
@@ -38,7 +58,16 @@ public class ListagemController {
 
     //Listar medicos
     @GetMapping("/medicos")
-    public String listarMedicos(Model model) {
+    public String listarMedicos(Model model, HttpSession session) {
+        Utilizador utilizadorLogado = (Utilizador) session.getAttribute("utilizadorLogado");
+
+        if (utilizadorLogado == null) {
+            return "redirect:/login";
+        }
+
+        if (!utilizadorLogado.getPerfil().equals("SECRETARIA")) {
+            return "redirect:/home";
+        }
         model.addAttribute("lista", listagemService.listarMedicos());
         model.addAttribute("tipo", "MEDICO");
         return "listagem";
@@ -46,7 +75,16 @@ public class ListagemController {
 
     //listar secretárias
     @GetMapping("/secretarias")
-    public String listarSecretarias(Model model) {
+    public String listarSecretarias(Model model, HttpSession session) {
+        Utilizador utilizadorLogado = (Utilizador) session.getAttribute("utilizadorLogado");
+
+        if (utilizadorLogado == null) {
+            return "redirect:/login";
+        }
+
+        if (!utilizadorLogado.getPerfil().equals("SECRETARIA")) {
+            return "redirect:/home";
+        }
         model.addAttribute("lista", listagemService.listarSecretarias());
         model.addAttribute("tipo", "SECRETARIA");
         return "listagem";
@@ -54,8 +92,17 @@ public class ListagemController {
 
     //listar disponibilidades
     @GetMapping("/disponibilidades")
-    public String listarDisponibilidade(Model model) {
+    public String listarDisponibilidade(Model model, HttpSession session) {
 
+        Utilizador utilizadorLogado = (Utilizador) session.getAttribute("utilizadorLogado");
+
+        if (utilizadorLogado == null) {
+            return "redirect:/login";
+        }
+
+        if (!utilizadorLogado.getPerfil().equals("MEDICO")) {
+            return "redirect:/home";
+        }
         model.addAttribute("disponibilidades", listagemService.listarTodasDisponibilidades());
         model.addAttribute("medicos", listagemService.listarMedicos());
         return "disponibilidades";
@@ -64,7 +111,17 @@ public class ListagemController {
     //listar consultas
     @GetMapping("/consultas")
     public String listarConsultas(@RequestParam(required = false) String especialidade,
-                                  Model model) {
+                                  Model model, HttpSession session) {
+
+        Utilizador utilizadorLogado = (Utilizador) session.getAttribute("utilizadorLogado");
+
+        if (utilizadorLogado == null) {
+            return "redirect:/login";
+        }
+
+        if (!utilizadorLogado.getPerfil().equals("SECRETARIA") && !utilizadorLogado.getPerfil().equals("PACIENTE")) {
+            return "redirect:/home";
+        }
         model.addAttribute("consultas", listagemService.listarTodasConsultas());
         model.addAttribute("especialidades", listagemService.listarEspecialidades());
         model.addAttribute("pacientes", listagemService.listarPacientes());
@@ -79,22 +136,38 @@ public class ListagemController {
         return "consultas";
     }
 
-    //Listar Receitas
 
+    //listar receitas
     @GetMapping("/receitas")
-    public String listarReceitas(Model model) {
+    public String listarReceitas(Model model, HttpSession session) {
+        Utilizador utilizadorLogado = (Utilizador) session.getAttribute("utilizadorLogado");
+
+        if (utilizadorLogado == null) {
+            return "redirect:/login";
+        }
+
+        if (!utilizadorLogado.getPerfil().equals("MEDICO")) {
+            return "redirect:/home";
+        }
         model.addAttribute("receitas", listagemService.listarReceitas());
         model.addAttribute("consultas", listagemService.listarTodasConsultas());
         return "receitas";
     }
 
-    //Listar Exames
+    //listar exames
+    @GetMapping("exames")
+    public String listarExames(Model model, HttpSession session) {
+        Utilizador utilizadorLogado = (Utilizador) session.getAttribute("utilizadorLogado");
 
-    @GetMapping("/exames")
-    public String listarExames(Model model) {
+        if (utilizadorLogado == null) {
+            return "redirect:/login";
+        }
+
+        if (!utilizadorLogado.getPerfil().equals("MEDICO")) {
+            return "redirect:/home";
+        }
         model.addAttribute("exames", listagemService.listarExames());
         model.addAttribute("consultas", listagemService.listarTodasConsultas());
         return "exames";
     }
-
 }

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Início</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="tema-utilizador">
+<main>
+    <header>
+        <h1>Bem-vindo(a)</h1>
+        <p>Utilizador:
+            <strong th:text="${utilizador.nome}" ></strong>
+            |
+            Perfil:
+            <strong th:text="${utilizador.perfil}"></strong>
+        </p>
+    </header>
+    <nav class="menu">
+        <a href="/home">Início</a>
+        <a href="/consultas" th:if="${utilizador.perfil == 'PACIENTE' || utilizador.perfil == 'SECRETARIA'}">Consultas</a>
+        <a href="/disponibilidades" th:if="${utilizador.perfil == 'MEDICO'}">Disponibilidades</a>
+        <a href="/receitas" th:if="${utilizador.perfil == 'MEDICO'}">Receitas</a>
+        <a href="/exames" th:if="${utilizador.perfil == 'MEDICO'}">Exames</a>
+        <a href="/pacientes" th:if="${utilizador.perfil == 'SECRETARIA'}">Pacientes</a>
+        <a href="/medicos" th:if="${utilizador.perfil == 'SECRETARIA'}">Médicos</a>
+        <a href="/secretarias" th:if="${utilizador.perfil == 'SECRETARIA'}">Secretárias</a>
+        <a href="/utilizadores" th:if="${utilizador.perfil == 'SECRETARIA'}">Utilizadores</a>
+        <a href="/logout">Sair</a>
+    </nav>
+    <section class="cartao">
+        <h2>Painel Inicial</h2>
+
+        <p th:if="${utilizador.perfil == 'PACIENTE'}"
+        >Pode consultar e marcar consultas.</p>
+
+        <p th:if="${utilizador.perfil == 'MEDICO'}"
+        >Pode gerir disponibilidades, receitas e exames.</p>
+
+        <p th:if="${utilizador.perfil == 'SECRETARIA'}">Pode gerir utilizadores e consultas</p>
+    </section>
+
+</main>
+</body>
+</html>

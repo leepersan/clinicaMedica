@@ -1,7 +1,9 @@
 package com.iefp.clinicaMedica.controller;
 
+import com.iefp.clinicaMedica.model.Utilizador;
 import com.iefp.clinicaMedica.service.ListagemService;
 import com.iefp.clinicaMedica.service.RegistoService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +27,7 @@ public class RegistoController {
 
     //Registar utilizador
     @GetMapping("/registar")
-    public String mostrarFormularioRegisto() {
+    public String mostrarFormularioRegisto(HttpSession session, Model model) {
         return "registar-utilizador";
     }
 
@@ -38,7 +40,17 @@ public class RegistoController {
                                      @RequestParam String telefone,
                                      @RequestParam String endereco,
                                      @RequestParam(required = false) String especialidade,
-                                     Model model) {
+                                     Model model, HttpSession session) {
+        Utilizador utilizadorLogado = (Utilizador) session.getAttribute("utilizadorLogado");
+
+        if (utilizadorLogado == null) {
+            return "redirect:/login";
+        }
+
+        if (!utilizadorLogado.getPerfil().equals("SECRETARIA")) {
+            return "redirect:/home";
+        }
+
         try {
             if (perfil.equals("PACIENTE")) {
                 registoService.registarPaciente(
@@ -96,7 +108,17 @@ public class RegistoController {
                                         @RequestParam LocalDate data,
                                         @RequestParam LocalTime horaInicioTrabalho,
                                         @RequestParam LocalTime horaFimTrabalho,
-                                        Model model) {
+                                        Model model, HttpSession session) {
+        Utilizador utilizadorLogado = (Utilizador) session.getAttribute("utilizadorLogado");
+
+        if (utilizadorLogado == null) {
+            return "redirect:/login";
+        }
+
+        if (!utilizadorLogado.getPerfil().equals("MEDICO")) {
+            return "redirect:/home";
+        }
+
 
         try {
             registoService.criarDisponibilidade(
@@ -122,7 +144,17 @@ public class RegistoController {
             ,
                                  @RequestParam Long pacienteId,
                                  @RequestParam(required = false) Long secretariaId,
-                                 Model model) {
+                                 Model model, HttpSession session) {
+
+        Utilizador utilizadorLogado = (Utilizador) session.getAttribute("utilizadorLogado");
+
+        if (utilizadorLogado == null) {
+            return "redirect:/login";
+        }
+
+        if (!utilizadorLogado.getPerfil().equals("MEDICO")) {
+            return "redirect:/home";
+        }
         try {
             registoService.marcarConsulta(
                     disponibilidadeId

@@ -5,6 +5,7 @@ import com.iefp.clinicaMedica.repository.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ListagemService {
@@ -31,6 +32,9 @@ public class ListagemService {
         this.consultaRepository = consultaRepository;
         this.exameRepository = exameRepository;
         this.receitaRepository = receitaRepository;
+    }
+    public Optional<Utilizador> procurarPorEmailSenha(String email, String senha) {
+        return utilizadorRepository.findByEmailAndSenha(email, senha);
     }
 
     public List<Utilizador> listarUtilizadores() {

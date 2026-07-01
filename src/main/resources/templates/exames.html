@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="tema-medico">
+<main>
+    <header class = "cabecalho">
+        <h1>Pedidos de Exames</h1>
+        <p>Registo de exames associados às consultas marcadas</p>
+    </header>
+
+
+    <nav class="menu">
+        <a href="/home">Início</a>
+
+        <a href="/consultas"
+           th:if="${utilizador != null && (utilizador.perfil == 'PACIENTE' || utilizador.perfil == 'SECRETARIA')}">
+            Consultas
+        </a>
+
+        <a href="/disponibilidades"
+           th:if="${utilizador != null && utilizador.perfil == 'MEDICO'}">
+            Disponibilidades
+        </a>
+
+        <a href="/receitas"
+           th:if="${utilizador != null && utilizador.perfil == 'MEDICO'}">
+            Receitas
+        </a>
+
+        <a href="/exames"
+           th:if="${utilizador != null && utilizador.perfil == 'MEDICO'}">
+            Exames
+        </a>
+
+        <a href="/pacientes"
+           th:if="${utilizador != null && utilizador.perfil == 'SECRETARIA'}">
+            Pacientes
+        </a>
+
+        <a href="/medicos"
+           th:if="${utilizador != null && utilizador.perfil == 'SECRETARIA'}">
+            Médicos
+        </a>
+
+        <a href="/secretarias"
+           th:if="${utilizador != null && utilizador.perfil == 'SECRETARIA'}">
+            Secretárias
+        </a>
+
+        <a href="/utilizadores"
+           th:if="${utilizador != null && utilizador.perfil == 'SECRETARIA'}">
+            Utilizadores
+        </a>
+
+        <a href="/logout">Sair</a>
+    </nav>
+    <section class="cartao">
+
+        <h2>Nova pedido de exame</h2>
+        <p th:if="${erro}" th:text="${erro}" class="erro"></p>
+
+        <form action="/exames" method="post" class="formulario">
+
+            <label for="consultaId">Consulta</label>
+            <select name="consultaId" id="consultaId" required>
+                <option value="">Selecione a consulta</option>
+                <option th:each="c : ${consultas}"
+                        th:value="${c.id}"
+                        th:text="${c.paciente.utilizador.nome + ' - ' + c.disponibilidade.medico.utilizador.nome +
+                        ' - ' + c.disponibilidade.medico.especialidade + ' - ' + #temporals.format(c.data, 'dd/MM/yyyy') +
+                        ' - ' + c.horaInicio + ' às ' + c.horaFim}"
+                ></option>
+            </select>
+
+            <label for="tipoExame">Tipo de exame</label>
+            <input type="text" id="tipoExame" name="tipoExame" placeholder="Tipo de exame">
+
+            <label for="descricao">Descrição</label>
+            <input type="text" id="descricao" name="descricao" placeholder="Descrição do exame">
+
+            <label for="resultado">Resultado</label>
+            <input type="text" id="resultado" name="resultado" placeholder="Escrever resultado do exame">
+            <button type="submit">Guardar pedido</button>
+        </form>
+
+    </section>
+<section>
+    <h2>Exames Registados</h2>
+    <table>
+        <tr>
+            <th>Paciente</th>
+            <th>Médico</th>
+            <th>Especialidade</th>
+            <th>Data da consulta</th>
+            <th>Hora</th>
+            <th>Tipo de exame</th>
+            <th>Descrição</th>
+            <th>Resultado</th>
+        </tr>
+        <tr th:each="e : ${exames}">
+            <td th:text="${e.consulta.paciente.utilizador.nome}"></td>
+            <td th:text="${e.consulta.disponibilidade.medico.utilizador.nome}"></td>
+            <td th:text="${e.consulta.disponibilidade.medico.especialidade}"></td>
+            <td th:text="${#temporals.format(e.consulta.data, 'dd/MM/yyyy')}"></td>
+            <td th:text="${e.consulta.horaInicio + ' às ' + e.consulta.horaFim}"></td>
+            <td th:text="${e.tipoExame}"></td>
+            <td th:text="${e.descricao}"></td>
+            <td th:text="${e.resultado}"></td>
+        </tr>
+    </table>
+
+</section>
+
+</main>
+</body>
+</html>
