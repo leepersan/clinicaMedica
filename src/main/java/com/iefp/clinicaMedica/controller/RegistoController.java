@@ -152,7 +152,8 @@ public class RegistoController {
             return "redirect:/login";
         }
 
-        if (!utilizadorLogado.getPerfil().equals("MEDICO")) {
+        if (!utilizadorLogado.getPerfil().equals("SECRETARIA") &&
+        !utilizadorLogado.getPerfil().equals("PACIENTE")){
             return "redirect:/home";
         }
         try {

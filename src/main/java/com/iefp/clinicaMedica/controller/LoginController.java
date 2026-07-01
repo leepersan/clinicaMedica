@@ -37,8 +37,10 @@ public class LoginController {
 
             session.setAttribute("utilizadorLogado", utilizador);
 
+            if (utilizador.getPerfil().equals("PACIENTE")) {    return "redirect:/consultas";}
+            if (utilizador.getPerfil().equals("MEDICO")) {    return "redirect:/disponibilidades";}
+            if (utilizador.getPerfil().equals("SECRETARIA")) {    return "redirect:/pacientes";}
 
-            return "redirect:/home";
         }
         model.addAttribute("erro", "Email ou senha inválidos");
         return "login";

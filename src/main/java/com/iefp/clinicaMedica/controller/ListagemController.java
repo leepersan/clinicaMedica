@@ -155,7 +155,7 @@ public class ListagemController {
     }
 
     //listar exames
-    @GetMapping("exames")
+    @GetMapping("/exames")
     public String listarExames(Model model, HttpSession session) {
         Utilizador utilizadorLogado = (Utilizador) session.getAttribute("utilizadorLogado");
 

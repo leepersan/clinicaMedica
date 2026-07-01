@@ -176,65 +176,68 @@ public class RegistoService {
         Paciente paciente = pacienteRepository.findById(pacienteId)
                 .orElseThrow(() -> new RuntimeException("Paciente não encontrado"));
 
-        Secretaria secretaria = secretariaRepository.findById(secretariaId)
-                .orElseThrow(() -> new RuntimeException("Secretária não encontrada"));
+        Secretaria secretaria = null;
+        if (secretariaId != null) {
+            secretaria = secretariaRepository.findById(secretariaId)
+                    .orElseThrow(() -> new RuntimeException("Secretária não encontrada"));
 
-        Consulta consulta = new Consulta(
-                null,
-                disponibilidade,
-                paciente,
-                secretaria,
-                disponibilidade.getData(),
-                disponibilidade.getHoraInicio(),
-                disponibilidade.getHoraFim(),
-                "MARCADA"
-        );
+            Consulta consulta = new Consulta(
+                    null,
+                    disponibilidade,
+                    paciente,
+                    secretaria,
+                    disponibilidade.getData(),
+                    disponibilidade.getHoraInicio(),
+                    disponibilidade.getHoraFim(),
+                    "MARCADA"
+            );
 
-        consultaRepository.save(consulta);
+            consultaRepository.save(consulta);
 
-        disponibilidade.setOcupada(true);
-        disponibilidadeRepository.save(disponibilidade);
+            disponibilidade.setOcupada(true);
+            disponibilidadeRepository.save(disponibilidade);
+
+        }
+    }
+        //Registar receita
+
+        public void criarReceita (Long consultaId,
+                String medicamento,
+                String dosagem,
+                String instrucoes){
+
+            Consulta consulta = consultaRepository.findById(consultaId)
+                    .orElseThrow(() -> new RuntimeException("Consulta não encontrada"));
+
+            Receita receita = new Receita(
+                    null,
+                    medicamento,
+                    dosagem,
+                    consulta,
+                    instrucoes
+            );
+            receitaRepository.save(receita);
+        }
+
+        //Criar exame
+
+        public void criarExame (Long consultaId,
+                String tipoExame,
+                String descricao,
+                String resultado){
+
+            Consulta consulta = consultaRepository.findById(consultaId)
+                    .orElseThrow(() -> new RuntimeException("Consulta não encontrada"));
+
+            Exame exame = new Exame(
+                    null,
+                    tipoExame,
+                    descricao,
+                    resultado,
+                    consulta
+            );
+            exameRepository.save(exame);
+        }
 
     }
 
-    //Registar receita
-
-    public void criarReceita(Long consultaId,
-                             String medicamento,
-                             String dosagem,
-                             String instrucoes){
-
-        Consulta consulta = consultaRepository.findById(consultaId)
-                .orElseThrow(()->new RuntimeException("Consulta não encontrada"));
-
-        Receita receita = new Receita(
-                null,
-                medicamento,
-                dosagem,
-                consulta,
-                instrucoes
-        );
-        receitaRepository.save(receita);
-    }
-
-    //Criar exame
-
-    public void criarExame(Long consultaId,
-                           String tipoExame,
-                           String descricao,
-                           String resultado){
-
-        Consulta consulta = consultaRepository.findById(consultaId)
-                .orElseThrow(()->new RuntimeException("Consulta não encontrada"));
-
-        Exame exame = new Exame(
-                null,
-                tipoExame,
-                descricao,
-                resultado,
-                consulta
-        );
-        exameRepository.save(exame);
-    }
-
-}

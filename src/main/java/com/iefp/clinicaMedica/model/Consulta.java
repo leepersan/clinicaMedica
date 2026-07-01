@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.boot.internal.Abstract;
+
 
 import java.time.LocalDate;
 import java.time.LocalTime;
