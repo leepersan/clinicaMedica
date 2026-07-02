@@ -26,6 +26,10 @@
         <a href="/medicos" th:if="${utilizador.perfil == 'SECRETARIA'}">Médicos</a>
         <a href="/secretarias" th:if="${utilizador.perfil == 'SECRETARIA'}">Secretárias</a>
         <a href="/utilizadores" th:if="${utilizador.perfil == 'SECRETARIA'}">Utilizadores</a>
+        <a href="/registar"
+           th:if="${utilizador != null && utilizador.perfil == 'SECRETARIA'}">
+            Registar Utilizadores
+        </a>
         <a href="/logout">Sair</a>
     </nav>
     <section class="cartao">

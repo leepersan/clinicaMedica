@@ -27,7 +27,16 @@ public class RegistoController {
 
     //Registar utilizador
     @GetMapping("/registar")
-    public String mostrarFormularioRegisto(HttpSession session, Model model) {
+    public String mostrarFormularioRegisto(HttpSession session) {
+        Utilizador utilizadorLogado = (Utilizador) session.getAttribute("utilizadorLogado");
+
+        if(utilizadorLogado ==  null){
+            return "redirect:/login";
+        }
+
+        if(!utilizadorLogado.getPerfil().equals("SECRETARIA")){
+            return "redirect:/home";
+        }
         return "registar-utilizador";
     }
 

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Utilizador</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="tema-utilizador">
+<main>
+    <header class="cabecalho">
+        <h1>Editar Utilizador</h1>
+        <p>Atualize os dados do utilizador selecionado</p>
+    </header>
+    <nav class="menu">
+        <a href="/home">Início</a>
+
+        <a href="/consultas"
+           th:if="${utilizador != null && (utilizador.perfil == 'PACIENTE' || utilizador.perfil == 'SECRETARIA')}">
+            Consultas
+        </a>
+
+        <a href="/disponibilidades"
+           th:if="${utilizador != null && utilizador.perfil == 'MEDICO'}">
+            Disponibilidades
+        </a>
+
+        <a href="/receitas"
+           th:if="${utilizador != null && utilizador.perfil == 'MEDICO'}">
+            Receitas
+        </a>
+
+        <a href="/exames"
+           th:if="${utilizador != null && utilizador.perfil == 'MEDICO'}">
+            Exames
+        </a>
+
+        <a href="/pacientes"
+           th:if="${utilizador != null && utilizador.perfil == 'SECRETARIA'}">
+            Pacientes
+        </a>
+
+        <a href="/medicos"
+           th:if="${utilizador != null && utilizador.perfil == 'SECRETARIA'}">
+            Médicos
+        </a>
+
+        <a href="/secretarias"
+           th:if="${utilizador != null && utilizador.perfil == 'SECRETARIA'}">
+            Secretárias
+        </a>
+
+        <a href="/utilizadores"
+           th:if="${utilizador != null && utilizador.perfil == 'SECRETARIA'}">
+            Utilizadores
+        </a>
+
+        <a href="/registar"
+           th:if="${utilizador != null && utilizador.perfil == 'SECRETARIA'}">
+            Registar Utilizadores
+        </a>
+
+
+        <a href="/logout">Sair</a>
+    </nav>
+    <section class="cartao">
+        <form th:if="${tipo=='PACIENTE'}"
+              th:action="@{/editar/paciente/{id}(id=${item.id})}"
+              method="post" class="formulario">
+
+            <label for="nomePaciente">Nome</label>
+            <input type="text" id="nomePaciente" name="nome" th:value="${item.utilizador.nome}" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Email" th:value="${item.utilizador.email}" required>
+
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" name="senha" placeholder="Senha"  th:value="${item.utilizador.senha}" required>
+
+            <label for="dataNascimento">Data de nascimento</label>
+            <input type="date" id="dataNascimento" name="dataNascimento" th:value="${item.utilizador.dataNascimento}" required>
+
+            <label for="telefone">Telefone</label>
+            <input type="text" id="telefone" name="telefone" placeholder="Telefone" th:value="${item.utilizador.telefone}" required>
+
+            <label for="endereco">Endereço</label>
+            <input type="text" id="endereco" name="endereco" placeholder="Endereço" th:value="${item.utilizador.endereco}" required>
+
+            <button type="submit">Guardar alteração</button>
+        </form>
+
+        <form th:if="${tipo=='MEDICO'}"
+              th:action="@{/editar/medico/{id}(id=${item.id})}"
+              method="post" class="formulario">
+
+            <label for="nomeMedico">Nome</label>
+            <input type="text" id="nomeMedico" name="nome" th:value="${item.utilizador.nome}">
+
+            <label for="emailMedico">Email</label>
+            <input type="email" id="emailMedico" name="email" placeholder="Email" th:value="${item.utilizador.email}" required>
+
+            <label for="senhaMedico">Senha</label>
+            <input type="password" id="senhaMedico" name="senha" placeholder="Senha" th:value="${item.utilizador.senha}" required>
+
+            <label for="dataNascimentoMedico">Data de nascimento</label>
+            <input type="date" id="dataNascimentoMedico" name="dataNascimento" th:value="${item.utilizador.dataNascimento}" required>
+
+            <label for="telefoneMedico">Telefone</label>
+            <input type="text" id="telefoneMedico" name="telefone" placeholder="Telefone" th:value="${item.utilizador.telefone}" required>
+
+            <label for="enderecoMedico">Endereço</label>
+            <input type="text" id="enderecoMedico" name="endereco" placeholder="Endereço" th:value="${item.utilizador.endereco}" required>
+
+            <label for="especialidade">Especialidade</label>
+            <input type="text" id="especialidade" name="especialidade" placeholder="Especialidade médica" th:value="${item.especialidade}">
+            <button type="submit">Guardar alteração</button>
+        </form>
+        <form th:if="${tipo=='SECRETARIA'}"
+              th:action="@{/editar/secretaria/{id}(id=${item.id})}"
+              method="post" class="formulario">
+
+            <label for="nomeSecretaria">Nome</label>
+            <input type="text" id="nomeSecretaria" name="nome" th:value="${item.utilizador.nome}" required>
+
+            <label for="emailSecretaria">Email</label>
+            <input type="email" id="emailSecretaria" name="email" placeholder="Email" th:value="${item.utilizador.email}" required>
+
+            <label for="senhaSecretaria">Senha</label>
+            <input type="password" id="senhaSecretaria" name="senha" placeholder="Senha"  th:value="${item.utilizador.senha}" required>
+
+            <label for="dataNascimentoSecretaria">Data de nascimento</label>
+            <input type="date" id="dataNascimentoSecretaria" name="dataNascimento" th:value="${item.utilizador.dataNascimento}" required>
+
+            <label for="telefoneSecretaria">Telefone</label>
+            <input type="text" id="telefoneSecretaria" name="telefone" placeholder="Telefone" th:value="${item.utilizador.telefone}" required>
+
+            <label for="enderecoSecretaria">Endereço</label>
+            <input type="text" id="enderecoSecretaria" name="endereco" placeholder="Endereço" th:value="${item.utilizador.endereco}" required>
+
+            <button type="submit">Guardar alteração</button>
+        </form>
+    </section>
+</main>
+</body>
+</html>

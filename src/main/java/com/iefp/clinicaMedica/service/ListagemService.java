@@ -33,6 +33,7 @@ public class ListagemService {
         this.exameRepository = exameRepository;
         this.receitaRepository = receitaRepository;
     }
+
     public Optional<Utilizador> procurarPorEmailSenha(String email, String senha) {
         return utilizadorRepository.findByEmailAndSenha(email, senha);
     }
@@ -82,4 +83,26 @@ public class ListagemService {
         return exameRepository.findAll();
     }
 
+    public Paciente procurarPacienteporId(long id) {
+        return pacienteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Paciente não encontrado"));
+
+    }
+
+    public Medico procurarMedicoporId(long id) {
+        return medicoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Médico não encontrado"));
+
+    }
+
+    public Secretaria procurarSecretariaporId(long id) {
+        return secretariaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Secretária não encontrada"));
+
+    }
+
 }
+
+
+
+

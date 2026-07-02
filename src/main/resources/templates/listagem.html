@@ -57,6 +57,11 @@
             Utilizadores
         </a>
 
+        <a href="/registar"
+           th:if="${utilizador != null && utilizador.perfil == 'SECRETARIA'}">
+            Registar Utilizadores
+        </a>
+
         <a href="/logout">Sair</a>
     </nav>
     <section>
@@ -92,6 +97,7 @@
             ?${#temporals.format(item.dataNascimento, 'dd/MM/yyyy')}
             :${#temporals.format(item.utilizador.dataNascimento, 'dd/MM/yyyy')}"
                 ></td>
+
               <td th:text="${tipo=='UTILIZADOR'} ? ${item.idade}: ${item.utilizador.idade}">
               </td>
 
@@ -99,6 +105,33 @@
                 </td>
 
                 <td th:text="${tipo=='UTILIZADOR'} ? ${item.endereco}: ${item.utilizador.endereco}">
+                </td>
+
+                <td>
+                    <a th:if="${tipo=='PACIENTE'}"
+                        th:href="@{/editar/paciente/{id}(id=${item.id})}"
+                    >Editar</a>
+
+                    <a th:if="${tipo=='MEDICO'}"
+                       th:href="@{/editar/medico/{id}(id=${item.id})}"
+                    >Editar</a>
+
+                    <a th:if="${tipo=='SECRETARIA'}"
+                       th:href="@{/editar/secretaria/{id}(id=${item.id})}"
+                    >Editar</a>
+
+                    <span th:if="${tipo=='PACIENTE' || tipo=='MEDICO' || tipo=='SECRETARIA'}">
+
+                    </span>
+                    <a th:if="${tipo=='PACIENTE'}"
+                       th:href="@{/remover/paciente/{id}(id=${item.id})}">Apagar</a>
+
+                    <a th:if="${tipo=='MEDICO'}"
+                       th:href="@{/remover/medico/{id}(id=${item.id})}">Apagar</a>
+
+                    <a th:if="${tipo=='SECRETARIA'}"
+                       th:href="@{/remover/secretaria/{id}(id=${item.id})}">Apagar</a>
+
                 </td>
             </tr>
         </table>

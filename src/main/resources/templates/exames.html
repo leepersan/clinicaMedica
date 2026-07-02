@@ -56,6 +56,11 @@
             Utilizadores
         </a>
 
+        <a href="/registar"
+           th:if="${utilizador != null && utilizador.perfil == 'SECRETARIA'}">
+            Registar Utilizadores
+        </a>
+
         <a href="/logout">Sair</a>
     </nav>
     <section class="cartao">
